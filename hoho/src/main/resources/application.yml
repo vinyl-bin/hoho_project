@@ -1,0 +1,54 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://localhost:3306/dbProject_final?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/hoho_project?serverTimezone=UTC&characterEncoding=UTF-8
+    username: dabin
+    password: dabin1234
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+#      ddl-auto: update
+      ddl-auto: create
+      naming:
+        #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
+  security:
+    ignored: /**
+    user:
+      password:
+        encoder:
+          enabled: true
+          algorithm: sha-256
+#  config:
+#    import: file:/home/dabin/Desktop/SpringBoot/db_project/db_project/src/main/resources/applicationValue.properties    # 변수 값 지정한 파일 위치
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+#cloud:
+#  aws:
+#    credentials:
+#      accessKey: ${ACCESS_KEY} # IAM 사용자 엑세스 키
+#      secretKey: ${SECRET_KEY} # IAM 사용자 비밀 엑세스 키
+#    s3:
+#      bucket: vinyl-bin-dbproject # 버킷명
+#    region:
+#      static: ap-northeast-2 # 리전
+#    stack:
+#      auto: false # Spring Cloud는 환경 또는 스택을 기반으로 이를 자동으로 감지
+
+
+#server:
+#  port: 10000
