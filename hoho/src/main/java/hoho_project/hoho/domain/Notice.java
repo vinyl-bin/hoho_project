@@ -27,4 +27,32 @@ public class Notice {
 
     @Column(columnDefinition = "LONGTEXT")
     private String notice_content;
+
+    //==생성 메서드==//
+    public static Notice createNoticeWithFile(String notice_title, String notice_date, String notice_imgName,
+                                              byte[] notice_image, String notice_content) {
+
+        Notice notice = new Notice();
+
+        notice.setNotice_title(notice_title);
+        notice.setNotice_date(notice_date);
+        notice.setNotice_view(0L);
+        notice.setNotice_imgName(notice_imgName);
+        notice.setNotice_image(notice_image);
+        notice.setNotice_content(notice_content);
+
+        return notice;
+    }
+
+    public static Notice createNoticeNoFile(String notice_title, String notice_date, String notice_content) {
+
+        Notice notice = new Notice();
+
+        notice.setNotice_title(notice_title);
+        notice.setNotice_date(notice_date);
+        notice.setNotice_view(0L);
+        notice.setNotice_content(notice_content);
+
+        return notice;
+    }
 }
