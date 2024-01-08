@@ -1,10 +1,13 @@
 package hoho_project.hoho.service;
 
+import hoho_project.hoho.domain.Home;
 import hoho_project.hoho.domain.Menu;
 import hoho_project.hoho.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -48,5 +51,13 @@ public class MenuService {
         menuRepository.delete(menu);
 
         return menu;
+    }
+
+    public Menu findOne(Long menu_id) {
+        return menuRepository.findOne(menu_id);
+    }
+
+    public List<Menu> findMenus() {
+        return menuRepository.findAll();
     }
 }

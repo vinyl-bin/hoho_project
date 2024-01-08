@@ -1,10 +1,13 @@
 package hoho_project.hoho.service;
 
+import hoho_project.hoho.domain.Home;
 import hoho_project.hoho.domain.Inquiry;
 import hoho_project.hoho.repository.InquiryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,5 +33,13 @@ public class InquiryService {
         inquiryRepository.delete(inquiry);
 
         return inquiry;
+    }
+
+    public Inquiry findOne(Long inquiry_id) {
+        return inquiryRepository.findOne(inquiry_id);
+    }
+
+    public List<Inquiry> findInquiries() {
+        return inquiryRepository.findAll();
     }
 }
