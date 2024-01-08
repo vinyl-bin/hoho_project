@@ -1,9 +1,12 @@
 package hoho_project.hoho.repository;
 
+import hoho_project.hoho.domain.Home;
 import hoho_project.hoho.domain.Menu;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,5 +26,14 @@ public class MenuRepository {
 
     public void delete(Menu menu) {
         em.remove(menu);
+    }
+
+    public Menu findOne(Long menu_id) {
+        return em.find(Menu.class, menu_id);
+    }
+
+    public List<Menu> findAll() {
+        return em.createQuery("select m from Menu m", Menu.class)
+                .getResultList();
     }
 }
