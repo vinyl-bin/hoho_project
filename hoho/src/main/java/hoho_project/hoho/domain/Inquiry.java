@@ -20,4 +20,15 @@ public class Inquiry {
 
     @Lob
     private byte[] inquiry_image;
+
+    //==생성 메서드==//
+    public static Inquiry createInquiry(String inquiry_type, String inquiry_imgName, byte[] inquiry_image) {
+        Inquiry inquiry = new Inquiry();
+
+        inquiry.setInquiry_type(inquiry_type);
+        inquiry.setInquiry_imgName(inquiry_imgName);
+        inquiry.setInquiry_image(inquiry_image);
+
+        return inquiry;
+    }
 }
