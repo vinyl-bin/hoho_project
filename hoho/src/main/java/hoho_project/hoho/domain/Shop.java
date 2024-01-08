@@ -24,4 +24,17 @@ public class Shop {
     private Long shop_phone;
 
     private String shop_address;
+
+    //==생성 메서드==//
+    public static Shop createShop(String shop_region, String shop_name, Long shop_phone, String shop_address) {
+
+        Shop shop = new Shop();
+
+        shop.setShop_region(shop_region);
+        shop.setShop_name(shop_name);
+        shop.setShop_phone(shop_phone);
+        shop.setShop_address(shop_address);
+
+        return shop;
+    }
 }
