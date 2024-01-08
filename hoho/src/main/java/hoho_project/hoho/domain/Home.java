@@ -20,4 +20,12 @@ public class Home {
     @Lob
     private byte[] home_image;
 
+    //==생성 메서드==//
+    public static Home createHome(String home_imgName, byte[] home_image) {
+        Home home = new Home();
+        home.setHome_imgName(home_imgName);
+        home.setHome_image(home_image);
+        return home;
+    }
+
 }
