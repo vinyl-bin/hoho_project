@@ -37,6 +37,10 @@ public class ShopRepository {
     }
 
     //검색
+    public Shop findOne(Long shop_id) {
+        return em.find(Shop.class, shop_id);
+    }
+
     public List<Shop> findAll() {
         return em.createQuery("select s from Shop s", Shop.class)
                 .getResultList();
