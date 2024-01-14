@@ -14,17 +14,15 @@ public class Home {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long home_id;
 
+    private String home_imgStoreName;
 
-    private String home_imgName;
-
-    @Lob
-    private byte[] home_image;
+    private String home_imgPath;
 
     //==생성 메서드==//
-    public static Home createHome(String home_imgName, byte[] home_image) {
+    public static Home createHome(String home_imgStoreName, String home_imgPath) {
         Home home = new Home();
-        home.setHome_imgName(home_imgName);
-        home.setHome_image(home_image);
+        home.setHome_imgStoreName(home_imgStoreName);
+        home.setHome_imgPath(home_imgPath);
         return home;
     }
 
