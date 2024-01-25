@@ -38,6 +38,10 @@ public class NoticeRepositoy {
     }
 
     //검색
+    public Notice findOne(Long notice_id) {
+        return em.find(Notice.class, notice_id);
+    }
+
     public List<Notice> findAll() {
         return em.createQuery("select n from Notice n", Notice.class)
                 .getResultList();

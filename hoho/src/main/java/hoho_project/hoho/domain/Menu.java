@@ -17,10 +17,9 @@ public class Menu {
 
     private String menu_type;
 
-    private String menu_imgName;
+    private String menu_imgStoreName;
 
-    @Lob
-    private byte[] menu_image;
+    private String menu_imgPath;
 
     private String menu_name;
 
@@ -29,13 +28,13 @@ public class Menu {
     private Long menu_price;
 
     //==생성 메서드==//
-    public static Menu createMenu(String menu_type, String menu_imgName,byte[] menu_image,
+    public static Menu createMenu(String menu_type, String menu_imgStoreName,String menu_imgPath,
                                   String menu_name, String menu_ingredient, Long menu_price) {
         Menu menu = new Menu();
 
         menu.setMenu_type(menu_type);
-        menu.setMenu_imgName(menu_imgName);
-        menu.setMenu_image(menu_image);
+        menu.setMenu_imgStoreName(menu_imgStoreName);
+        menu.setMenu_imgPath(menu_imgPath);
         menu.setMenu_name(menu_name);
         menu.setMenu_ingredient(menu_ingredient);
         menu.setMenu_price(menu_price);

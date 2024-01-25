@@ -3,12 +3,21 @@ package hoho_project.hoho.service;
 import hoho_project.hoho.domain.Home;
 import hoho_project.hoho.repository.HomeRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +27,8 @@ import java.util.UUID;
 public class HomeService {
 
     private final HomeRepository homeRepository;
+    @Value("${uploadPath}")
+    private String uploadPath;
 
     // 사진 등록
     @Transactional
@@ -27,24 +38,41 @@ public class HomeService {
         UUID uuid = UUID.randomUUID();
         String home_imgStoreName = uuid + "_" + file.getOriginalFilename();
 
-        String projectPath = System.getProperty("user.dir") + "hoho/src/main/resources/static/saveFiles/home/";
-
-        File saveFile = new File(projectPath, home_imgStoreName);
+        //초기화
+        Home home = null;
 
         try {
-            file.transferTo(saveFile);
-            System.out.println("file saved successfully to " + saveFile.getAbsolutePath());
+
+            // 리소스에서 InputStream 얻어오기
+            InputStream inputStream = file.getInputStream();
+
+            // 복사할 경로로 Path 생성
+            Resource resource = new ClassPathResource("static/saveFiles/home/");
+            Path saveFilePath = Paths.get(resource.getFile() + "/" + home_imgStoreName);
+
+            // 파일 복사
+            Files.copy(inputStream, saveFilePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // InputStream 및 File을 닫기
+            IOUtils.closeQuietly(inputStream);
+
+            System.out.println("파일을 저장하였습니다." + saveFilePath);
+
+
+            String filePathString = saveFilePath.toString();
+
+            System.out.println(filePathString);
+
+            // home 생성
+            home = Home.createHome(home_imgStoreName, filePathString);
+
+            // home 저장
+            homeRepository.save(home);
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Exception이 발생했습니다." + System.getProperty("user.dir"));
+//            e.printStackTrace();
         }
-
-        String home_imgPath = saveFile.getAbsolutePath();
-
-        // home 생성
-        Home home = Home.createHome(home_imgStoreName, home_imgPath);
-
-        // home 저장
-        homeRepository.save(home);
 
         return home;
     }
@@ -53,6 +81,7 @@ public class HomeService {
     @Transactional
     public Home deleteHome(Home home) {
 
+//        File fileToDelete = new File(System.getProperty("user.dir") + "/src/main/resources/static" + home.getHome_imgPath());
         File fileToDelete = new File(home.getHome_imgPath());
 
         if (fileToDelete.delete()) {

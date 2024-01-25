@@ -59,3 +59,7 @@ sourceSets {
 clean {
 	delete file(generated)
 }
+
+bootJar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
