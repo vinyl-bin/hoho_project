@@ -7,7 +7,7 @@
 
         <div th:each="home, status : ${homes}">
             <div th:class="${status.index == 0} ? 'mySlideDiv fade active' : 'mySlideDiv fade'">
-                <img th:src="${home.getHome_imgPath()}">
+                <img th:src="@{/hohoImages/home/{name} (name=${home.getHome_imgStoreName()})}">
             </div>
         </div>
 
