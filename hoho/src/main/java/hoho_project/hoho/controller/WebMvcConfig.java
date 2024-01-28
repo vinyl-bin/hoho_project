@@ -7,12 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private String classPath = "classpath:static/saveFiles";  //클래스패스 상의 디렉토리 경로
+//    private String classPath = "classpath:static/saveFiles";  //클래스패스 상의 디렉토리 경로
+    private String classPath = "file:///home/dabin/Desktop/hohoImages/";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/home/**")
+                .addResourceHandler("/hohoImages/**")
                 .addResourceLocations(classPath);
     }
 }

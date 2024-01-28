@@ -7,6 +7,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,15 +43,20 @@ public class HomeService {
         Home home = null;
 
         try {
-
             // 리소스에서 InputStream 얻어오기
             InputStream inputStream = file.getInputStream();
 
-            // 복사할 경로로 Path 생성
-            Resource resource = new ClassPathResource("static/saveFiles/home/");
-            Path saveFilePath = Paths.get(resource.getFile() + "/" + home_imgStoreName);
+            Resource resource = new UrlResource("file:///home/dabin/Desktop/hohoImages/");
 
-            // 파일 복사
+            Path saveFilePath = Paths.get(resource.getURI()).resolve("home/" + home_imgStoreName);
+
+            // home 폴더가 있는지 확인
+            File homeDir = saveFilePath.getParent().toFile();
+            if (!homeDir.exists()) {
+                // home 폴더가 없으면 생성
+                homeDir.mkdir();
+            }
+
             Files.copy(inputStream, saveFilePath, StandardCopyOption.REPLACE_EXISTING);
 
             // InputStream 및 File을 닫기

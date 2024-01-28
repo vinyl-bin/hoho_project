@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="a">
+
+    <a href="/home/save" id="image">이미지 추가</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>이미지</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="home : ${homes}">
+            <td th:text="${home.getHome_id()}"></td>
+
+            <td><img style="width: 500px" th:src="@{/hohoImages/home/{name} (name=${home.getHome_imgStoreName()})}"></td>
+<!--            <td><img style="width: 500px" th:src="@{/saveFiles/home/385d5c2e-90c4-409b-930c-57be5a1c18b0_예시화면.jpeg}"></td>-->
+
+            <!--삭제 버튼-->
+            <td>
+                <a href="#" th:href="@{/home/{id}/delete (id=${home.getHome_id()})}"
+                   class="btn btn-primary" role="button">삭제</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
