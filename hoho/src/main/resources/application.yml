@@ -37,7 +37,6 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
-uploadPath: /static/saveFiles/home/
 
 #cloud:
 #  aws:

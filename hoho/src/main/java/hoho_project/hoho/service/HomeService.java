@@ -4,8 +4,6 @@ import hoho_project.hoho.domain.Home;
 import hoho_project.hoho.repository.HomeRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -28,8 +26,6 @@ import java.util.UUID;
 public class HomeService {
 
     private final HomeRepository homeRepository;
-    @Value("${uploadPath}")
-    private String uploadPath;
 
     // 사진 등록
     @Transactional
