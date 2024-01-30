@@ -4,12 +4,20 @@ import hoho_project.hoho.domain.Home;
 import hoho_project.hoho.domain.Inquiry;
 import hoho_project.hoho.repository.InquiryRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,22 +35,44 @@ public class InquiryService {
         UUID uuid = UUID.randomUUID();
         String inquiry_imgStoreName = uuid + "_" + file.getOriginalFilename();
 
-        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/saveFiles/inquiry/";
-
-        File saveFile = new File(projectPath, inquiry_imgStoreName);
+        //초기화
+        Inquiry inquiry = null;
 
         try {
-            file.transferTo(saveFile);
-            System.out.println("file saved successfully to " + saveFile.getAbsolutePath());
+            // 리소스에서 InputStream 얻어오기
+            InputStream inputStream = file.getInputStream();
+
+            Resource resource = new UrlResource("file:///home/dabin/Desktop/hohoImages/");
+
+            Path saveFilePath = Paths.get(resource.getURI()).resolve("inquiry/" + inquiry_imgStoreName);
+
+            // home 폴더가 있는지 확인
+            File inquiryDir = saveFilePath.getParent().toFile();
+            if (!inquiryDir.exists()) {
+                // home 폴더가 없으면 생성
+                inquiryDir.mkdir();
+            }
+
+            Files.copy(inputStream, saveFilePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // InputStream 및 File을 닫기
+            IOUtils.closeQuietly(inputStream);
+
+            System.out.println("파일을 저장하였습니다." + saveFilePath);
+
+
+            String filePathString = saveFilePath.toString();
+
+            System.out.println(filePathString);
+
+            // home 생성
+            inquiry = inquiry.createInquiry(inquiry_type, inquiry_imgStoreName, filePathString);
+
+            // home 저장
+            inquiryRepository.save(inquiry);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Exception이 발생했습니다." + System.getProperty("user.dir"));
         }
-
-        String inquiry_imgPath = saveFile.getAbsolutePath();
-
-        Inquiry inquiry = Inquiry.createInquiry(inquiry_type, inquiry_imgStoreName, inquiry_imgPath);
-
-        inquiryRepository.save(inquiry);
 
         return inquiry;
     }
