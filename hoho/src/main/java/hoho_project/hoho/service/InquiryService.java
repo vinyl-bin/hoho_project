@@ -46,10 +46,10 @@ public class InquiryService {
 
             Path saveFilePath = Paths.get(resource.getURI()).resolve("inquiry/" + inquiry_imgStoreName);
 
-            // home 폴더가 있는지 확인
+            // inquiry 폴더가 있는지 확인
             File inquiryDir = saveFilePath.getParent().toFile();
             if (!inquiryDir.exists()) {
-                // home 폴더가 없으면 생성
+                // inquiry 폴더가 없으면 생성
                 inquiryDir.mkdir();
             }
 
@@ -65,10 +65,10 @@ public class InquiryService {
 
             System.out.println(filePathString);
 
-            // home 생성
+            // inquiry 생성
             inquiry = inquiry.createInquiry(inquiry_type, inquiry_imgStoreName, filePathString);
 
-            // home 저장
+            // inquiry 저장
             inquiryRepository.save(inquiry);
         } catch (IOException e) {
             System.err.println("Exception이 발생했습니다." + System.getProperty("user.dir"));
