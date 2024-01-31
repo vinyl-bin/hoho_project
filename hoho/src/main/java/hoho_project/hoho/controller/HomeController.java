@@ -60,4 +60,21 @@ public class HomeController {
         return "redirect:/home/editList";
     }
 
+
+    /**
+     * 호떡 소개 페이지
+     */
+    @RequestMapping("/introduction")
+    public String introduction() {
+        return "home/introduction";
+    }
+
+    /**
+     * 모든 수정 리스트 있는 페이지
+     */
+    @RequestMapping("/editPage")
+    public String editPage() {
+        return "home/allEditPage";
+    }
+
 }

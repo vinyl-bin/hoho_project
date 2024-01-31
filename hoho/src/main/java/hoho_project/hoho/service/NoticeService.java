@@ -1,6 +1,5 @@
 package hoho_project.hoho.service;
 
-import hoho_project.hoho.domain.Menu;
 import hoho_project.hoho.domain.Notice;
 import hoho_project.hoho.dto.NoticeSearchCondition;
 import hoho_project.hoho.repository.NoticeRepositoy;
