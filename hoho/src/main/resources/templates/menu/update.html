@@ -13,6 +13,11 @@
 
         <input type="file" id="image_id" name="file" th:field="*{fileSave}">
         <div class="selectImage"><img id="existing_img" th:if="${not #strings.isEmpty(form.filePath)}" th:src="@{/hohoImages/menu/{fileName}(fileName=${form.fileName})}" width="500"/></div>
+
+        <!-- 생략 (파일을 변경하지 않을 경우 기존 파일 정보를 보내기 위해서)-->
+        <input type="hidden" th:field="*{filePath}" />
+        <input type="hidden" th:field="*{fileName}" />
+
         <script th:inline="javascript">
             $(document).ready(function() {
                 // 파일 선택(input 태그)의 변경 이벤트를 감지하여 이미지를 미리보기로 표시

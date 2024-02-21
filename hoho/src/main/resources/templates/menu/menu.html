@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div th:each="type : ${types}">
+
+        <p style="font-weight: bold" th:text="${type}"></p>
+
+        <div th:each="menu : ${menus}">
+
+            <div th:if="${type} == ${menu.getMenu_type()}">
+
+                <img style="width: 500px" th:src="@{/hohoImages/menu/{name} (name=${menu.getMenu_imgStoreName()})}">
+                <p th:text="${menu.getMenu_name()}"></p>
+                <p th:text="${menu.getMenu_ingredient()}"></p>
+                <p th:text="${menu.getMenu_price()}"></p>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

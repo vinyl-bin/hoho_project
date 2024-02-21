@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="a">
+
+    <form role="form" action="/menu/save" th:object="${form}" method="post" enctype="multipart/form-data">
+        <p>이미지 크기는 ~~~~를 권장합니다.</p>
+
+<!--        타입-->
+        <input type="text" th:field="*{menu_type}" placeholder="메뉴 타입을 적어주세요.">
+<!--        이미지 업로드-->
+        <input type="file" id="image_id" name="file" th:field="*{fileSave}">
+        <div class="selectImage"><img src=""/></div>
+        <script>
+            $("#image_id").change(function(){
+                if(this.files && this.files[0]) {
+                    var reader = new FileReader;
+                    reader.onload = function(data) {
+                        $(".selectImage img").attr("src", data.target.result).width(500);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        </script>
+<!--        메뉴 이름-->
+        <input type="text" th:field="*{menu_name}" placeholder="메뉴 이름을 적어주세요.">
+<!--        메뉴 재료 및 소개-->
+        <textarea th:field="*{menu_ingredient}" placeholder="메뉴 재료 및 소개를 적어주세요." style="height: 50px"></textarea>
+<!--        메뉴 가격-->
+        <input type="number" th:field="*{menu_price}" placeholder="메뉴 가격을 적어주세요.">
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

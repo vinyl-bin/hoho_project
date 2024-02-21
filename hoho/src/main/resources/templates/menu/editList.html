@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/editBodyHeader :: editBodyHeader"/>
+
+<div class="a">
+
+    <a href="/menu/save" id="image">메뉴 추가</a>
+
+    <div th:each="type : ${types}">
+
+        <p style="font-weight: bold" th:text="${type}"></p>
+
+        <div th:each="menu : ${menus}">
+
+            <div th:if="${type} == ${menu.getMenu_type()}">
+
+                <img style="width: 500px" th:src="@{/hohoImages/menu/{name} (name=${menu.getMenu_imgStoreName()})}">
+                <p th:text="${menu.getMenu_name()}"></p>
+                <p th:text="${menu.getMenu_ingredient()}"></p>
+                <p th:text="${menu.getMenu_price()}"></p>
+
+                <!--수정 버튼-->
+                <td>
+                    <a href="#" th:href="@{/menu/{id}/update (id=${menu.getMenu_id()})}"
+                       class="btn btn-primary" role="button">수정</a>
+                </td>
+
+                <!--삭제 버튼-->
+                <td>
+                    <a href="#" th:href="@{/menu/{id}/delete (id=${menu.getMenu_id()})}"
+                       class="btn btn-primary" role="button">삭제</a>
+                </td>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
